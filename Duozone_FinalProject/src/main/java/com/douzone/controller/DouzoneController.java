@@ -8,9 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douzone.entity.DouzoneVO;
@@ -21,6 +23,9 @@ import com.douzone.service.IncomingService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@CrossOrigin("*")
+
+
 @RestController
 public class DouzoneController {
 
@@ -30,7 +35,7 @@ public class DouzoneController {
 	@Autowired
 	IncomingService incomingService;
 	
-	@PostMapping(value="/hello.do")
+	@PostMapping(value="/login")
 	public Map<String, Object> hello(Locale locale, Model model,
 			@RequestBody HashMap<String, String> map, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
@@ -38,9 +43,11 @@ public class DouzoneController {
 		DouzoneVO member = douzoneService.login(map.get("MEMBER_ID"), map.get("MEMBER_PW"));
 		if(member != null) {
 			result.put("member",member);
+			result.put("isLogOn", true);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("member", member);
 		}else {
+			result.put("isLogOn", false);
 			session.setAttribute("isLogOn", false);
 		}
 		
