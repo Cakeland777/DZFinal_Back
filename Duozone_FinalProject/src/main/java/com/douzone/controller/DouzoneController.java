@@ -21,9 +21,6 @@ import com.douzone.service.IncomingService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@CrossOrigin("*")
-
-
 @RestController
 public class DouzoneController {
 
@@ -49,20 +46,53 @@ public class DouzoneController {
 		
 		return result;
 	}
-	//소득자료조회
+	//소득자별조회
 	@GetMapping(value="/earner_list")
-	public Map<String, Object> checkInfo(Locale locale, Model model,
+	public Map<String, Object> earner_list(Locale locale, Model model,
 			@RequestBody HashMap<String, Object> map, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 		//데이터 5개를 보내야 함
 		DouzoneVO douzoneVo=(DouzoneVO) session.getAttribute("member");
-		map.put("worker_id", douzoneVo.getWorker_id());
-		IncomingVO incoming = incomingService.select(map);
+		map.put("worker_id", "W001");
+		IncomingVO incoming = incomingService.earner_list(map);
 		
 		result.put("earnerInfo", incoming);
 		
 		return result;
 	}
+	//사업소득자 비가시화
+	@GetMapping(value="/reg/visible_update")
+	public Map<String, Object> visible_update(Locale locale, Model model,
+			@RequestBody HashMap<String, Object> map, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		//데이터 5개를 보내야 함
+		DouzoneVO douzoneVo=(DouzoneVO) session.getAttribute("member");
+		map.put("worker_id", "W202200001");
+		HashMap<String, Object> test_map = new HashMap<String, Object>();
+		test_map.put("map",map);
+		try {
+		incomingService.visible_update(test_map);
+		result.put("visible_true", true);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+//	//소득구분별조회
+//	@GetMapping(value="/earner_list/income_category")
+//	public Map<String, Object> income_category(Locale locale, Model model,
+//			@RequestBody HashMap<String, Object> map, HttpSession session) {
+//		Map<String, Object> result = new HashMap<>();
+//		//데이터 5개를 보내야 함
+//		DouzoneVO douzoneVo=(DouzoneVO) session.getAttribute("member");
+//		map.put("worker_id", douzoneVo.getWorker_id());
+//		IncomingVO incoming = incomingService.income_category(map);
+//		
+//		result.put("earnerInfo", incoming);
+//		
+//		return result;
+//	}
 	//소득자료등록
 	@GetMapping(value="/regist")
 	public Map<String, Object> insertinfo(Locale locale, Model model,
