@@ -5,6 +5,7 @@
 
 <mapper namespace="com.douzone.DAO.IncomingDAO">
 	<select id="earner_list" parameterType="java.util.Map"
+<<<<<<< HEAD
 		resultType="com.douzone.entity.IncomingVO">
 		select 
 			count(*) as count, t.tax_id, t.accrual_ym, t.payment_ym, t.payment_date, t.total_payment, 
@@ -28,6 +29,8 @@
 		</foreach>
 	</update>
 <!-- 	<select id="income_category" parameterType="java.util.Map"
+=======
+>>>>>>> cd0e6c93acced30a9be966f48ba1e5ab4629f811
 		resultType="com.douzone.entity.IncomingVO">
 		select * from earner e left join earner_tax t 
 		on e.worker_id=t.worker_id
@@ -35,6 +38,26 @@
 		${param1} between
 		to_date(#{param2} ,'YYYYmm') 
 		and to_date(#{param3} ,'YYYYmm')
+<<<<<<< HEAD
+=======
+		and e.${param4} like concat('%',#{param5},'%')
+		order by #{param6};
+	</select>
+	<update id="visible_update">
+		update regist_buffer set is_visible='N' where worker_id=#{worker_id} and earner_code=
+		<foreach collection="map" index="index" item="earner_code" separator="or">
+			${earner_code}
+		</foreach>
+	</update>
+<!-- 	<select id="income_category" parameterType="java.util.Map"
+		resultType="com.douzone.entity.IncomingVO">
+		select * from earner e left join earner_tax t 
+		on e.worker_id=t.worker_id
+		where e.worker_id=#{worker_id} and
+		${param1} between
+		to_date(#{param2} ,'YYYYmm') 
+		and to_date(#{param3} ,'YYYYmm')
+>>>>>>> cd0e6c93acced30a9be966f48ba1e5ab4629f811
 		and e.div_code like concat('%',#{param4},'%')
 		order by #{param5};
 	</select> -->

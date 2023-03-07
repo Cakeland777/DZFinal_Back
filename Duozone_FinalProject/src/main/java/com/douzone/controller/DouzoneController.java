@@ -40,9 +40,11 @@ public class DouzoneController {
 		DouzoneVO member = douzoneService.login(map.get("MEMBER_ID"), map.get("MEMBER_PW"));
 		if(member != null) {
 			result.put("member",member);
+			result.put("isLogOn", true);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("member", member);
 		}else {
+			result.put("isLogOn", false);
 			session.setAttribute("isLogOn", false);
 		}
 		
@@ -73,7 +75,11 @@ public class DouzoneController {
 		HashMap<String, Object> test_map = new HashMap<String, Object>();
 		test_map.put("map",map);
 		try {
+<<<<<<< HEAD
 		incomingService.visible_update(test_map);
+=======
+		
+>>>>>>> cd0e6c93acced30a9be966f48ba1e5ab4629f811
 		result.put("visible_true", true);
 		}catch(Exception e) {
 			e.printStackTrace();
