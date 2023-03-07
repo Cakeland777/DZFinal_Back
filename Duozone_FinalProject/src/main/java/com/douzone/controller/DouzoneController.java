@@ -8,11 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douzone.entity.DouzoneVO;
@@ -43,29 +41,30 @@ public class DouzoneController {
 		DouzoneVO member = douzoneService.login(map.get("MEMBER_ID"), map.get("MEMBER_PW"));
 		if(member != null) {
 			result.put("member",member);
-			result.put("isLogOn", true);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("member", member);
 		}else {
-			result.put("isLogOn", false);
 			session.setAttribute("isLogOn", false);
 		}
 		
 		return result;
 	}
-	
-	@GetMapping(value="/checkinfo.do")
+	//소득자료조회
+	@GetMapping(value="/earner_list")
 	public Map<String, Object> checkInfo(Locale locale, Model model,
 			@RequestBody HashMap<String, Object> map, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
-		//데이터 6개를 보내야 함
+		//데이터 5개를 보내야 함
+		DouzoneVO douzoneVo=(DouzoneVO) session.getAttribute("member");
+		map.put("worker_id", douzoneVo.getWorker_id());
 		IncomingVO incoming = incomingService.select(map);
+		
 		result.put("earnerInfo", incoming);
 		
 		return result;
 	}
-	
-	@GetMapping(value="/regist.do")
+	//소득자료등록
+	@GetMapping(value="/regist")
 	public Map<String, Object> insertinfo(Locale locale, Model model,
 			@RequestBody HashMap<String, Object> map, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
