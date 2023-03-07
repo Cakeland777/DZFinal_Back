@@ -34,7 +34,7 @@ public class DouzoneController {
 	
 	@Autowired
 	IncomingService incomingService;
-	
+	//로그인
 	@PostMapping(value="/login")
 	public Map<String, Object> hello(Locale locale, Model model,
 			@RequestBody HashMap<String, String> map, HttpSession session) {
@@ -77,8 +77,8 @@ public class DouzoneController {
 		}
 		return result;
 	}
-	
-	@PostMapping(value="/searchearner.do")
+	//소득자료조회
+	@PostMapping(value="/searchearner")
 	public Map<String, Object> searchearner(Locale locale, Model model,
 			@RequestBody HashMap<String, Object> map, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
