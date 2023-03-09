@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.douzone.Aes;
 import com.douzone.entity.DouzoneVO;
 import com.douzone.entity.IncomingVO;
 import com.douzone.service.DouzoneService;
@@ -34,7 +35,7 @@ public class DouzoneController {
 	//로그인
 	@PostMapping(value="/login")
 	public Map<String, Object> hello(Locale locale, Model model,
-			@RequestBody HashMap<String, String> map, HttpSession session) {
+			@RequestBody HashMap<String, String> map, HttpSession session) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 
 		DouzoneVO member = douzoneService.login(map.get("MEMBER_ID"), map.get("MEMBER_PW"));
@@ -75,11 +76,7 @@ public class DouzoneController {
 		HashMap<String, Object> test_map = new HashMap<String, Object>();
 		test_map.put("map",map);
 		try {
-<<<<<<< HEAD
 		incomingService.visible_update(test_map);
-=======
-		
->>>>>>> cd0e6c93acced30a9be966f48ba1e5ab4629f811
 		result.put("visible_true", true);
 		}catch(Exception e) {
 			e.printStackTrace();
